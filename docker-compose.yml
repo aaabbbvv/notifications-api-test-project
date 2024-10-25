@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    ports:
+      - '3305:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: Bv8D73ZcrUUtGLsHfl449D9yDD
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: test_usr
+      MYSQL_PASSWORD: Bv8D73ZcrUUtGLsHfl449D9yDD
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./test_db_dump_file.sql:/docker-entrypoint-initdb.d/test_db_dump_file.sql
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - '8000:8000'
+    expose:
+      - 8000
+    command: poetry run gunicorn --chdir myproject core.wsgi:application --bind 0.0.0.0:8000
+    depends_on:
+      - db
+    env_file:
+      - default.env
+    entrypoint: /entrypoint.sh
+    volumes:
+      - static-data:/opt/app/static_root
+      - media-data:/opt/app/media_root
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - app
+    restart: "always"
+    volumes:
+      - static-data:/opt/app/static_root
+      - media-data:/opt/app/media_root
+
+volumes:
+  db_data:
+  static-data:
+  media-data:
