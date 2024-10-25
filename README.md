@@ -40,3 +40,9 @@ Access the API documentation via Swagger or Redoc:
     ```
     Authorization: Bearer <your_access_token>
     ```
+### CREATE NOTIFICATION FUNCTION
+The `create_notification` function is located at:
+
+`myproject/accounts/notification_helper.py`
+
+You can use it to create notifications within the project.
