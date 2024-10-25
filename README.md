@@ -9,12 +9,6 @@ To set up and run the project, follow these steps:
 ```bash
 docker compose up --build -d
 ```
-
-use default credentioanals from default.env file
-```bash
-DEFAULT_ADMIN_EMAIL=admin@admin.com
-DEFAULT_ADMIN_PASSWORD=qwerty123456!
-```
 Access the API documentation via Swagger or Redoc:
 
 - Swagger: [http://0.0.0.0:8000/api/swagger/](http://0.0.0.0:8000/api/swagger/)
